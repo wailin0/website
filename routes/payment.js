@@ -30,10 +30,6 @@ router.post('/', async function (req, res) {
 /* get user data from app and redirect to paynamics*/
 router.get('/', function (req, res, next) {
 
-    if(!req.qeuery){
-        res.send("unauthorized")
-    }
-
     const url = req.protocol+"://"+req.headers.host
 
 
