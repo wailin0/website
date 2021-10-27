@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ORO Wallet Topup</title>
+    <link rel='stylesheet' href='/stylesheets/payment.css'/>
+</head>
+
+<script>
+    document.addEventListener("message", function(data) {
+        alert(data.data);
+    });
+</script>
+<body>
+
+<div class="container">
+
+
+        <h1>Confirmation for ORO Wallet topup</h1>
+
+        <table>
+            <tr>
+                <td>
+                    amount
+                </td>
+                <td>
+                    PHP <%= amount %>
+                </td>
+            </tr>
+        </table>
+
+
+    <form name="payment-f" method="POST" action="https://testpti.payserv.net/webpayment/default.aspx">
+        <input type="hidden" name="paymentrequest" value="<%= base64 %>">
+        <input type="submit" value="Confirm" class="button">
+
+    </form>
+
+</div>
+</body>
+</html>
