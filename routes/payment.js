@@ -30,6 +30,13 @@ router.post('/', async function (req, res) {
 /* get user data from app and redirect to paynamics*/
 router.get('/', function (req, res, next) {
 
+    if(!req.qeuery){
+        res.send("unauthorized")
+    }
+
+    const url = req.protocol+"://"+req.headers.host
+
+
     //decode base64 data from app
     const decodedJSON = Buffer.from(req.query.encodedJSON, 'base64').toString('ascii')
 
@@ -45,14 +52,14 @@ router.get('/', function (req, res, next) {
     const randomString = (Math.random() + 1).toString(36).substring(2);
     const randomNumber = Math.floor(Math.random() * (100000000000000 + 1))
 
-    const mid = "0000001810210BD1349F"; // merchant id
-    const mkey = "8AF7CBECB3023DA4149804F485CD2FB9" // merchant key
+    const mid = process.env.MERCHANT_ID; // merchant id
+    const mkey = process.env.MERCHANT_KEY; // merchant key
     const requestid = randomString + randomNumber;
 
-    const noturl = `https://oro-wallet.herokuapp.com/payment/?uid=${uid}&amount=${amount}`; // url where paynamics response is posted
-    const resurl = "https://oro-wallet.herokuapp.com/"; //url of merchant landing page
-    const cancelurl = "https://oro-wallet.herokuapp.com/"; //url of merchant landing page
-    const mlogo_url = "https://oro-wallet.herokuapp.com/images/logo-paynamics.png"
+    const noturl = `${url}/payment/?uid=${uid}&amount=${amount}`; // url where paynamics response is posted
+    const resurl = url; //url of merchant landing page
+    const cancelurl = url; //url of merchant landing page
+    const mlogo_url = `${url}/images/logo-paynamics.png`
 
     const country = "PH";
     const currency = "PHP";
@@ -109,6 +116,7 @@ router.get('/', function (req, res, next) {
     res.render('topup', {
         base64,
         amount,
+        paynamicsUrl: process.env.PAYNAMICS_URL
     });
 });
 
