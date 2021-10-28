@@ -17,24 +17,22 @@ router.post('/', async function (req, res) {
         json = result
     });
 
-    if(json.ServiceResponseWPF.application[0].merchantid[0]===process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0]==="GR001"){
+    if (json.ServiceResponseWPF.application[0].merchantid[0] === process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR001") {
         try {
             const topUpData = {
                 id: uid,
                 amount: amount,
-                role:"passenger",
+                role: "passenger",
                 paynamicsResponseId: json.ServiceResponseWPF.application[0].response_id,
                 paymentType: json.ServiceResponseWPF.application[0].ptype,
                 processorResponseId: json.ServiceResponseWPF.responseStatus[0].processor_response_id
             }
             await axios.post('https://api.aicpass.com/wallet/api/internal/topupWallet', topUpData)
             res.send('success')
-        }
-        catch (e) {
+        } catch (e) {
             res.send("top up failed")
         }
-    }
-    else {
+    } else {
         res.send("top up failed")
     }
 })
@@ -43,19 +41,14 @@ router.post('/', async function (req, res) {
 /* get user data from app and redirect to paynamics*/
 router.get('/', function (req, res, next) {
 
-    const url = req.protocol+"://"+req.headers.host
+    const url = req.protocol + "://" + req.headers.host
 
 
     //decode base64 data from app
     const decodedJSON = Buffer.from(req.query.encodedJSON, 'base64').toString('ascii')
 
     //user data from decoded JSON
-    const {uid, fname, lname, email, phone, amount} = JSON.parse(decodedJSON)
-
-    const addr1 = "Dela Costa St.";
-    const city = "makati";
-    const state = "MM";
-    const zip = "1200";
+    const {uid, fname, lname, email, phone, amount, address, city, state, zip} = JSON.parse(decodedJSON)
 
     //generate random string for merchant request id
     const randomString = (Math.random() + 1).toString(36).substring(2);
@@ -76,7 +69,7 @@ router.get('/', function (req, res, next) {
     const clientip = req.connection.remoteAddress.substr(7)  // get user browser ip
 
     //concat strings for signature
-    const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + addr1 + city + state + country + zip + email + phone + clientip + amount + currency + mkey
+    const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + address + city + state + country + zip + email + phone + clientip + amount + currency + mkey
 
     //create sha512 hash for signature
     const signature = crypto.createHash('sha512').update(string).digest('hex')
@@ -104,7 +97,7 @@ router.get('/', function (req, res, next) {
         "<descriptor_note>'My Descriptor .18008008008'</descriptor_note>" +
         "<fname>" + fname + "</fname>" +
         "<lname>" + lname + "</lname>" +
-        "<address1>" + addr1 + "</address1>" +
+        "<address1>" + address + "</address1>" +
         "<city>" + city + "</city>" +
         "<state>" + state + "</state>" +
         "<country>" + country + "</country>" +
