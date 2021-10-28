@@ -16,21 +16,27 @@ router.post('/', async function (req, res) {
     parseString(base64Decoded, function (err, result) {
         json = result
     });
-    console.log(req.body.paymentresponse)
-    console.log(json)
-    const topUpData = {
-        id: uid,
-        amount: amount,
-        role:"passenger",
-        paynamicsResponseId: "34934343",
-        paymentType: "VISA",
-        processorResponseId: "34343"
+
+    if(json.ServiceResponseWPF.application[0].merchantid[0]===process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0]==="GR001"){
+        try {
+            const topUpData = {
+                id: uid,
+                amount: amount,
+                role:"passenger",
+                paynamicsResponseId: json.ServiceResponseWPF.application[0].response_id,
+                paymentType: json.ServiceResponseWPF.application[0].ptype,
+                processorResponseId: json.ServiceResponseWPF.responseStatus[0].processor_response_id
+            }
+            await axios.post('https://api.aicpass.com/wallet/api/internal/topupWallet', topUpData)
+            res.send('success')
+        }
+        catch (e) {
+            res.send("top up failed")
+        }
     }
-
-    await axios.post('https://api.aicpass.com/api/internal/topupWallet', topUpData)
-
-
-    res.render('success')
+    else {
+        res.send("top up failed")
+    }
 })
 
 
