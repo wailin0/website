@@ -65,11 +65,12 @@ router.get('/', function (req, res, next) {
 
     const country = "PH";
     const currency = "PHP";
+    const secure3d = "try3d"
     const ipaddress = req.connection.localAddress.substr(7)  // get server ip
     const clientip = req.connection.remoteAddress.substr(7)  // get user browser ip
 
     //concat strings for signature
-    const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + address + city + state + country + zip + email + phone + clientip + amount + currency + mkey
+    const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + address + city + state + country + zip + email + phone + clientip + amount + currency + secure3d + mkey
 
     //create sha512 hash for signature
     const signature = crypto.createHash('sha512').update(string).digest('hex')
@@ -102,6 +103,7 @@ router.get('/', function (req, res, next) {
         "<state>" + state + "</state>" +
         "<country>" + country + "</country>" +
         "<zip>" + zip + "</zip>" +
+        "<secure3d>" + secure3d + "</secure3d>" +
         "<trxtype>sale</trxtype>" +
         "<email>" + email + "</email>" +
         "<phone>" + phone + "</phone>" +
