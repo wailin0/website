@@ -10,20 +10,27 @@ router.post('/', async function (req, res) {
     const uid = req.query.uid
     const amount = req.query.amount
 
-    console.log("uid=" + uid + " - " + "amount=" + amount)
-
-    let json = undefined
+    let json = null
     const base64Decoded = Buffer.from(req.body.paymentresponse.replace(/ /g, "+"), 'base64').toString('ascii')
 
     parseString(base64Decoded, function (err, result) {
         json = result
     });
+    console.log(req.body.paymentresponse)
+    console.log(json)
+    const topUpData = {
+        id: uid,
+        amount: amount,
+        role:"passenger",
+        paynamicsResponseId: "34934343",
+        paymentType: "VISA",
+        processorResponseId: "34343"
+    }
 
-    axios.post('https://wailin-3f518.firebaseio.com/test.json', {body: json})
-        .then(res => console.log('success'))
-        .catch(err => console.log('error'))
+    await axios.post('https://api.aicpass.com/api/internal/topupWallet', topUpData)
 
-    return 0
+
+    res.render('success')
 })
 
 
