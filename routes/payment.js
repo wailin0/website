@@ -23,9 +23,9 @@ router.post('/', async function (req, res) {
                 id: uid,
                 amount: amount,
                 role: "passenger",
-                paynamicsResponseId: json.ServiceResponseWPF.application[0].response_id,
-                paymentType: json.ServiceResponseWPF.application[0].ptype,
-                processorResponseId: json.ServiceResponseWPF.responseStatus[0].processor_response_id
+                paynamicsResponseId: json.ServiceResponseWPF.application[0].response_id[0],
+                paymentType: json.ServiceResponseWPF.application[0].ptype[0],
+                processorResponseId: json.ServiceResponseWPF.responseStatus[0].processor_response_id[0]
             }
             await axios.post('https://api.aicpass.com/wallet/api/internal/topupWallet', topUpData)
             res.send('success')
