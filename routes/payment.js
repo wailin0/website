@@ -61,7 +61,7 @@ router.get('/', function (req, res, next) {
     const noturl = `${url}/payment/?uid=${uid}&amount=${amount}`; // url where paynamics response is posted
     const resurl = url; //url of merchant landing page
     const cancelurl = url; //url of merchant landing page
-    const mlogo_url = `${url}/images/logo-paynamics.png`
+    const mlogo_url = 'https://firebasestorage.googleapis.com/v0/b/lugyone.appspot.com/o/logo-paynamics.png?alt=media&token=f59abbaa-ab48-44c1-bcc2-0d041ab3c818'
 
     const country = "PH";
     const currency = "PHP";
