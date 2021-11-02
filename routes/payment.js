@@ -17,7 +17,7 @@ router.post('/', async function (req, res) {
         json = result
     });
 
-    if (json.ServiceResponseWPF.application[0].merchantid[0] === process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR001") {
+    if (json.ServiceResponseWPF.application[0].merchantid[0] === process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR001" || json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR002") {
         try {
             const topUpData = {
                 id: uid,
@@ -75,9 +75,9 @@ router.get('/', function (req, res, next) {
     //create sha512 hash for signature
     const signature = crypto.createHash('sha512').update(string).digest('hex')
 
-    //xml to encode to base64
+    //e.xml to encode to base64
     let xml =
-        "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" +
+        "<?e.xml version=\"1.0\" encoding=\"utf-8\" ?>" +
         "<Request>" +
         "<orders>" +
         "<items>" +
@@ -114,7 +114,7 @@ router.get('/', function (req, res, next) {
         "<signature>" + signature + "</signature>" +
         "</Request>"
 
-    //encode xml to base64 for sending to paynamics
+    //encode e.xml to base64 for sending to paynamics
     const base64 = Buffer.from(xml).toString('base64')
 
     res.render('topup', {
