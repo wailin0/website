@@ -7,6 +7,7 @@ require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var paymentRouter = require('./routes/payment');
+var onfidoRouter = require('./routes/onfido');
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/payment', paymentRouter);
+app.use('/onfido', onfidoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

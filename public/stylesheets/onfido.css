@@ -1,0 +1,22 @@
+#onfido-mount {
+    position: absolute;
+    top:0;
+    bottom:0;
+    right:0;
+    left:0;
+    overflow:hidden;
+}
+
+.onfido-sdk-ui-Modal-inner {
+    font-size: 2rem !important;
+    max-width: 100% !important;
+    height: 100% !important;
+}
+
+.ods-button.-action--primary {
+    height: 7rem !important;
+}
+
+body {
+    margin:0; padding:0; height:100%; width:100%;
+}
