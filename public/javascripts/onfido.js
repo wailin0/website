@@ -9,7 +9,7 @@ Onfido.init({
     onUserExit: function (userExitCode) {
         window.ReactNativeWebView.postMessage("fail");
     },
-    steps: ['welcome', 'document', 'face', 'complete'],
+    steps: ['welcome','document', 'face', 'complete'],
 })
 
 
