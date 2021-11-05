@@ -15,5 +15,8 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "onfido-sdk-ui": "^6.15.2"
   }
 }

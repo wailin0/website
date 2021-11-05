@@ -17,7 +17,9 @@ router.post('/', async function (req, res) {
         json = result
     });
 
-    if (json.ServiceResponseWPF.application[0].merchantid[0] === process.env.MERCHANT_ID && json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR001" || json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR002") {
+    if (json.ServiceResponseWPF.application[0].merchantid[0] === process.env.MERCHANT_ID
+        && json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR001"
+        || json.ServiceResponseWPF.responseStatus[0].response_code[0] === "GR002") {
         try {
             const topUpData = {
                 id: uid,

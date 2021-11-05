@@ -6,10 +6,13 @@ Onfido.init({
         // callback for when everything is complete
         window.ReactNativeWebView.postMessage("success")
     },
+    onError: function (error){
+        alert(error.message)
+    },
     onUserExit: function (userExitCode) {
         window.ReactNativeWebView.postMessage("fail");
     },
-    steps: ['welcome','document', 'face', 'complete'],
+    steps: ['welcome', 'face', 'complete'],
 })
 
 
