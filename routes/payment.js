@@ -69,12 +69,9 @@ router.get('/', function (req, res, next) {
     const country = "PH";
     const currency = "PHP";
     const secure3d = "try3d"
-    const oldaddress = req.socket.localAddress.substr(7)  // get server ip
+    // const ipaddress = req.socket.localAddress.substr(7)  // get server ip
     const ipaddress = ip.address()
     const clientip = req.socket.remoteAddress.substr(7)  // get user browser ip
-
-
-    console.log(oldaddress)
 
     //concat strings for signature
     const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + address + city + state + country + zip + email + phone + clientip + amount + currency + secure3d + mkey
