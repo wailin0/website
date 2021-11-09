@@ -3,6 +3,7 @@ var router = express.Router();
 var crypto = require('crypto');
 var axios = require('axios');
 var parseString = require('xml2js').parseString;
+var ip = require("ip");
 
 // get response data from paynamics after transaction and topup user wallet
 router.post('/', async function (req, res) {
@@ -68,8 +69,12 @@ router.get('/', function (req, res, next) {
     const country = "PH";
     const currency = "PHP";
     const secure3d = "try3d"
-    const ipaddress = req.connection.localAddress.substr(7)  // get server ip
-    const clientip = req.connection.remoteAddress.substr(7)  // get user browser ip
+    const oldaddress = req.socket.localAddress.substr(7)  // get server ip
+    const ipaddress = ip.address()
+    const clientip = req.socket.remoteAddress.substr(7)  // get user browser ip
+
+
+    console.log(oldaddress)
 
     //concat strings for signature
     const string = mid + requestid + ipaddress + noturl + resurl + fname + lname + address + city + state + country + zip + email + phone + clientip + amount + currency + secure3d + mkey
