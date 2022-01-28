@@ -46,7 +46,6 @@ router.get('/', function (req, res, next) {
 
     const url = req.protocol + "://" + req.headers.host
 
-
     //decode base64 data from app
     const decodedJSON = Buffer.from(req.query.encodedJSON, 'base64').toString('ascii')
 
@@ -55,21 +54,19 @@ router.get('/', function (req, res, next) {
 
     //generate random string for merchant request id
     const randomString = (Math.random() + 1).toString(36).substring(2);
-    const randomNumber = Math.floor(Math.random() * (100000000000000 + 1))
 
     const mid = process.env.MERCHANT_ID; // merchant id
     const mkey = process.env.MERCHANT_KEY; // merchant key
-    const requestid = randomString + randomNumber;
+    const requestid = Date.now() + randomString + uid;
 
     const noturl = `${url}/payment/?uid=${uid}&amount=${amount}`; // url where paynamics response is posted
     const resurl = url; //url of merchant landing page
     const cancelurl = url; //url of merchant landing page
-    const mlogo_url = 'https://firebasestorage.googleapis.com/v0/b/lugyone.appspot.com/o/logo-paynamics.png?alt=media&token=f59abbaa-ab48-44c1-bcc2-0d041ab3c818'
+    const mlogo_url = 'https://aici-aicpass.s3.ap-southeast-1.amazonaws.com/static/logo/oro-logo-full-width.png'
 
     const country = "PH";
     const currency = "PHP";
     const secure3d = "try3d"
-    // const ipaddress = req.socket.localAddress.substr(7)  // get server ip
     const ipaddress = ip.address()
     const clientip = req.socket.remoteAddress.substr(7)  // get user browser ip
 
