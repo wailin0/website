@@ -44,7 +44,6 @@ router.post('/', async function (req, res) {
 /* get user data from app and redirect to paynamics*/
 router.get('/', function (req, res, next) {
 
-    // const url = req.protocol + "://" + req.headers.host
     const url = process.env.WEBSITE_URL
 
     //decode base64 data from app
