@@ -14,6 +14,9 @@ router.get('/privacy-policy', function (req, res, next) {
     res.render('privacy_policy');
 });
 
+router.get('/redirect-to-app', function (req, res, next) {
+    res.render('redirect_to_app');
+});
 
 module.exports = router;
 

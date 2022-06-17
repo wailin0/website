@@ -44,7 +44,8 @@ router.post('/', async function (req, res) {
 /* get user data from app and redirect to paynamics*/
 router.get('/', function (req, res, next) {
 
-    const url = req.protocol + "://" + req.headers.host
+    // const url = req.protocol + "://" + req.headers.host
+    const url = process.env.WEBSITE_URL
 
     //decode base64 data from app
     const decodedJSON = Buffer.from(req.query.encodedJSON, 'base64').toString('ascii')
@@ -60,8 +61,8 @@ router.get('/', function (req, res, next) {
     const requestid = Date.now() + randomString + uid;
 
     const noturl = `${url}/payment/?uid=${uid}&amount=${amount}`; // url where paynamics response is posted
-    const resurl = url; //url of merchant landing page
-    const cancelurl = url; //url of merchant landing page
+    const resurl = url + "/redirect-to-app"; //url of merchant landing page
+    const cancelurl = url + "/redirect-to-app"; //url of merchant landing page
     const mlogo_url = 'https://aici-aicpass.s3.ap-southeast-1.amazonaws.com/static/logo/oro-logo-full-width.png'
 
     const country = "PH";
